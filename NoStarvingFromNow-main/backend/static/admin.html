@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        table, th, td{
+            border: 1px solid black;
+        }
+        table{
+            border-spacing: 0;
+            width: 80vw;
+            text-align: center;
+        }
+        body {
+            background-color: lightblue;
+        }
+        button{
+            margin-top: 5px;
+            width: 100px;
+            height: 25px;
+            background-color: cyan;
+            color: black;
+        }
+    </style>
+  </head>
+  <body>
+    <table
+      id="results"
+      style="margin-left: auto; margin-right: auto;"
+    >
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th>Food Items</th>
+          <th>Quantity</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+    <center><button onclick="moveToDonees()">Donees</button></center>
+    <script>
+      async function getFoodDetails() {
+        let response = await fetch("http://localhost:2000/food");
+        let result = await response.json();
+        console.log(result);
+        var tbody = "";
+        const tableBody = document.getElementById("tableBody");
+        result.forEach((element, i) => {
+          tbody += `<tr>
+              <td>${i+1}</td>
+              <td>${element.name}</td>
+              <td>${element.phone}</td>
+              <td>${element.address}</td>
+              <td>${element.fooditems}</td>
+              <td>${element.quantity}</td>          
+            </tr>`
+        });
+        tableBody.innerHTML = tbody;
+        //   <td><button onclick="deleteStudent(${element._id})">Delete</button></td>
+      }
+      getFoodDetails();
+      function moveToDonees() {
+        window.location.assign("http://localhost:2000/getdonees");
+      }
+    </script>
+  </body>
+</html>
